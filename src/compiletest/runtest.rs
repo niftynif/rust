@@ -22,7 +22,7 @@ use util::logv;
 
 use std::cell::Cell;
 use std::rt::io;
-use std::rt::io::file;
+use std::rt::io::fs;
 use std::rt::io::File;
 use std::os;
 use std::str;
@@ -651,7 +651,7 @@ fn compose_and_run_compiler(
 
 fn ensure_dir(path: &Path) {
     if path.is_dir() { return; }
-    file::mkdir(path, io::UserRWX);
+    fs::mkdir(path, io::UserRWX);
 }
 
 fn compose_and_run(config: &config, testfile: &Path,
@@ -921,7 +921,7 @@ fn _dummy_exec_compiled_test(config: &config, props: &TestProps,
 fn _arm_push_aux_shared_library(config: &config, testfile: &Path) {
     let tdir = aux_output_dir_name(config, testfile);
 
-    let dirs = file::readdir(&tdir);
+    let dirs = fs::readdir(&tdir);
     for file in dirs.iter() {
         if file.extension_str() == Some("so") {
             // FIXME (#9639): This needs to handle non-utf8 paths
