@@ -279,17 +279,7 @@ impl<K: Clone + TotalOrd, V: Clone> Clone for Leaf<K, V> {
 impl<K: TotalOrd, V: TotalEq> TotalEq for Leaf<K, V> {
     ///Implementation of equals function for leaves that compares LeafElts.
     fn equals(&self, other: &Leaf<K, V>) -> bool {
-        if self.elts.len() == other.elts.len() && self.elts.len() != 0 {
-            let mut i = 0;
-            while i < self.elts.len() {
-                if !self.elts[i].equals(&other.elts[i]) {
-                    return false;
-                }
-                i = i + 1;
-            }
-            return true;
-        }
-        false
+        self.elts.equals(&other.elts)
     }
 }
 
@@ -356,19 +346,7 @@ impl<K: Clone + TotalOrd, V: Clone> Clone for Branch<K, V> {
 impl<K: TotalOrd, V: TotalEq> TotalEq for Branch<K, V> {
     ///Equals function for Branches--compares all the elements in each branch
     fn equals(&self, other: &Branch<K, V>) -> bool {
-        if self.elts.len() == other.elts.len() && self.elts.len() != 0 {
-            let mut i = 0;
-            while i < self.elts.len() {
-                if !self.elts[i].equals(&other.elts[i]) {
-                    return false;
-                }
-                i = i + 1;
-            }
-            if self.rightmost_child.equals(&other.rightmost_child) {
-                return true;
-            }
-        }
-        false
+        self.elts.equals(&other.elts)
     }
 }
 
